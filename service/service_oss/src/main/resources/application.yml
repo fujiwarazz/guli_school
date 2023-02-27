@@ -1,0 +1,18 @@
+server:
+  port: 8002
+spring:
+  application:
+    name: service-oss
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+
+aliyun:
+  oss:
+    file:
+      endpoint: oss-cn-hangzhou.aliyuncs.com
+      keyid: LTAI5tBkx5yHPJtJc2maaoj7
+      keysecret: ah70DssneljMByNzla1oo0Gs2AqldB
+      bucketname: learning-glxy-images

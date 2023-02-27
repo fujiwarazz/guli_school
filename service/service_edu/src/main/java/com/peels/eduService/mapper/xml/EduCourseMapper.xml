@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.peels.eduService.mapper.EduCourseMapper">
+
+    <select id="getPublishCourseInfo" resultType="com.peels.eduService.entity.vo.CoursePublishVo">
+        SELECT ec.id,
+               ec.title,
+               ec.price,
+               ec.lesson_num AS lessonNum,
+               ec.cover,
+               ecd.description,
+               et.name       AS teacherName,
+               es1.title     as subjectLevelOne,
+               es2.title     as subjectLevelTwo
+        FROM guli_school.edu_course ec
+                 LEFT JOIN guli_school.edu_course_description ecd ON ecd.id = ec.id
+                 LEFT JOIN guli_school.edu_teacher et on et.id = ec.teacher_id
+                 LEFT JOIN guli_school.edu_subject es1 on es1.id = ec.subject_parent_id
+                 LEFT JOIN guli_school.edu_subject es2 on es2.id = ec.subject_id
+        WHERE ec.id = #{id}
+    </select>
+    <select id="getBaseCourseInfo" resultType="com.peels.eduService.entity.vo.CourseFrontVo">
+        SELECT ec.title,
+               ec.price,
+               ec.cover,
+               ecd.description,
+               et.id         AS teacherId,
+               et.avatar     AS avatar,
+               et.intro      AS intro,
+               ec.buy_count  AS buyCount,
+               ec.view_count AS viewCount,
+               ec.lesson_num AS lessonNum,
+               et.name       AS teacherName,
+               es1.title     AS subjectLevelOne,
+               es2.title     AS subjectLevelTwo
+        FROM guli_school.edu_course ec
+               LEFT JOIN guli_school.edu_course_description ecd ON ecd.id = ec.id
+               LEFT JOIN guli_school.edu_teacher et on et.id = ec.teacher_id
+               LEFT JOIN guli_school.edu_subject es1 on es1.id = ec.subject_parent_id
+               LEFT JOIN guli_school.edu_subject es2 on es2.id = ec.subject_id
+        WHERE ec.id = #{id}
+    </select>
+
+</mapper>

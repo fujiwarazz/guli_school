@@ -1,0 +1,75 @@
+server:
+  port: 8007
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  profiles:
+    active: dev
+  application:
+    name: service-order
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/guli_school?serverTimezone=GMT%2B8
+    username: root
+    password: Zzhzzhzzh1
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  redis:
+    host: 43.143.201.120
+    port: 6379
+    password: ajksdhiuwqhuaasd
+    timeout: 30000
+
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    #逻辑删除字段
+    db-config:
+      logic-delete-field: isDeleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: auto
+  mapper-locations:
+    - classpath:com/peels/eduOrder/mapper/xml/*.xml
+
+
+
+feign:
+  #使用连接池代替URLConnection
+  httpclient:
+    enabled: true
+    max-connections-per-route: 50
+    max-connections: 200
+  #开启熔断
+  hystrix:
+    enabled: false
+
+# 日志级别:  OFF<FATAL<ERROR<WARN<INFO<DEBUG<ALL  从右向左包含关系
+#logging:
+#  level:
+#    root: INFO
+tencentOss:
+  AccessKey:
+    ID: LTAI5tBkx5yHPJtJc2maaoj7
+    Secret: ah70DssneljMByNzla1oo0Gs2AqldB
+
+
+weixin:
+  pay:
+    #关联的公众号appid
+    appid: wx74862e0dfcf69954
+    #商户号
+    partner: 1558950191
+    #商户key
+    partnerkey: T6m9iK73b0kn9g5v426MKfHQH7X8rKwb
+    #回调地址
+    notifyurl: http://guli.shop/api/order/weixinPay/weixinNotify
+
+
+

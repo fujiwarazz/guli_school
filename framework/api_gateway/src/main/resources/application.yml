@@ -1,0 +1,78 @@
+server:
+  port: 8222
+spring:
+  application:
+    name: service-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+#
+#      globalcors: # 全局的跨域处理
+#        add-to-simple-url-handler-mapping: true # 解决options请求被拦截问题
+#        corsConfigurations:
+#          '[/**]': #拦截所有请求
+#            allowedOrigins: # 允许哪些网站的跨域请求
+#              - "http://localhost:9528"
+#            allowedMethods: # 允许的跨域ajax的请求方式
+#              - "GET"
+#              - "POST"
+#              - "DELETE"
+#              - "PUT"
+#              - "OPTIONS"
+#            allowedHeaders: "*" # 允许在请求中携带的头信息
+#            allowCredentials: true # 是否允许携带cookie
+#            maxAge: 360000 # 这次跨域检测的有效期
+
+      routes:
+        - id: service-acl
+          uri: lb://service-acl
+          predicates:
+            - Path=/admin/acl/**
+
+        - id: service-edu
+          uri: lb://service-edu
+          predicates: #断言
+            - Path=/eduService/**
+            - Before=2044-01-20T17:42:47.789-07:00[America/Denver]
+
+        - id: service-cms
+          uri: lb://service-cms
+          predicates:
+            - Path=/educms/**
+
+        - id: service-msm
+          uri: lb://service-msm
+          predicates:
+            - Path=/edumsm/**
+
+        - id: service-order
+          uri: lb://service-order
+          predicates:
+            - Path=/eduOrder/**
+
+        - id: service-oss
+          uri: lb://service-oss
+          predicates:
+            - Path=/eduOss/**
+
+        - id: service-statistics
+          uri: lb://service-statistics
+          predicates:
+            - Path=/serviceStatistics/**
+
+        - id: service-ucenter
+          uri: lb://service-ucenter
+          predicates:
+            - Path=/eduCenter/**
+            - Path=/api/ucenter/wx/**
+
+        - id: service-vod
+          uri: lb://service-vod
+          predicates:
+            - Path=/eduVod/**
+
